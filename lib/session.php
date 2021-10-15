@@ -33,15 +33,11 @@ class Session{
      self::destroy();
      header("Location:login.php");
     }
-//     if (self::get("userlogin")== false) {
-//         self::destroy();
-//         header("Location:login.php");
-//     }
  }
 
  public static function checkLogin(){
     self::init();
-    if (self::get("login")== true || self::get("userlogin")==true) {
+    if (self::get("login")== true) {
      header("refresh:3,Location:index.php");
     }
 //     if (self::get("userlogin")== true) {

@@ -63,7 +63,6 @@ class product
     }
     public function show_product()
     {
-        
         //  $query = "SELECT * FROM tbl_product.*,tbl_category.cateName,tbl_brand.brandName FROM tbl_product 
         //  INNER JOIN tbl_category ON tbl_product.cateid=tbl_category.cateid
         //  INNER JOIN tbl_brand ON tbl_product.brandid = tbl_brand.brandid 
@@ -177,14 +176,42 @@ class product
         }
     }
     // FRONT END
-    public function getproduct_featured(){
-        $query = "SELECT * FROM tbl_product WHERE type = '1' ORDER BY type DESC LIMIT 4";
+    public function show_related_product(){
+        $query = "SELECT * FROM tbl_product  ORDER BY productid DESC LIMIT 4";
         $result = $this->db->select($query);
         return $result;
     }
     public function get_details($id){
         $query = "SELECT p.*,c.cateName,b.brandName FROM tbl_product as p, tbl_category as c, tbl_brand as b 
         WHERE p.cateid = c.cateid AND p.brandid = b.brandid AND p.productid = '$id' ORDER BY p.productid desc";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    public function show_new_product()
+    {
+        $query = "SELECT * FROM tbl_product order by productid desc LIMIT 10";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    public function show_topselling()
+    {
+        $query = "SELECT * FROM tbl_product WHERE productQuantity <= 100 LIMIT 10";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    public function show_product_by_category($cateslug){
+        $query1 = "SELECT * FROM tbl_category WHERE categorySlug = '$cateslug'";
+        $result1 = $this->db->select($query1);
+        if ($result1){
+            $cateid = $result1->fetch_assoc();
+            $a = $cateid['cateid'];
+            $query2 = "SELECT * FROM tbl_product WHERE cateid = '$a'";
+            $result2 = $this->db->select($query2);
+            return $result2;
+        }
+    }
+    public function show_single_product($productslug){
+        $query = "SELECT * FROM tbl_product WHERE productSlug = '$productslug'";
         $result = $this->db->select($query);
         return $result;
     }

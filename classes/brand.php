@@ -103,6 +103,8 @@ class brand
         $alert = "Đã huỷ kích hoạt";
         return $alert;
     }
+
+
 }
 
 ?>

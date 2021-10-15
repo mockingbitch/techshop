@@ -1,6 +1,10 @@
 <?php
-include 'lib/session.php';
-Session::checkSession();
+include_once 'lib/session.php';
+//Session::checkSession();
+include_once 'classes/product.php';
+include_once 'classes/category.php';
+$product = new product();
+$cate = new category();
 ?>
 <?php
 if(isset($_GET['action']) && $_GET['action']=='logout'){
@@ -11,7 +15,9 @@ if(isset($_GET['action']) && $_GET['action']=='logout'){
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
@@ -54,7 +60,7 @@ if(isset($_GET['action']) && $_GET['action']=='logout'){
 						<li><a href="#"><i class="fa fa-phone"></i> +0123456789</a></li>
 						<li><a href="#"><i class="fa fa-envelope-o"></i> phongtq1@smartosc.com</a></li>
 						<li><a href="#"><i class="fa fa-map-marker"></i> 250 Kim Giang</a></li>
-                        <li><a href="#"><i class="fa fa-map-marker"></i> <?php echo $_SERVER['fullname'];?></a></li>
+<!--                        <li><a href="#"><i class="fa fa-map-marker"></i> --><?php //echo $_SERVER['fullname'];?><!--</a></li>-->
 					</ul>
 					<ul class="header-links pull-right">
 						<li><a href="login.php"><i class="fa fa-user-o"></i> <?php if (isset($_SERVER['name'])){
@@ -78,7 +84,7 @@ if(isset($_GET['action']) && $_GET['action']=='logout'){
 						<div class="col-md-3">
 							<div class="header-logo">
 								<a href="#" class="logo">
-									<img src="./img/logo.png" alt="">
+									<img src="../img/logo.png" alt="">
 								</a>
 							</div>
 						</div>
@@ -185,12 +191,17 @@ if(isset($_GET['action']) && $_GET['action']=='logout'){
 					<!-- NAV -->
 					<ul class="main-nav nav navbar-nav">
 						<li class="active"><a href="#">Trang chủ</a></li>
-						<li><a href="#">Hot Deals</a></li>
-						<li><a href="#">Danh mục</a></li>
-						<li><a href="#">Máy tính</a></li>
-						<li><a href="#">Điện thoại</a></li>
-						<li><a href="#">Máy ảnh</a></li>
-						<li><a href="#">Phụ kiện</a></li>
+                        <?php
+                        $show_category = $cate->show_category();
+                        if ($show_category){
+                            while ($result_cate = $show_category->fetch_assoc()){
+                        ?>
+						<li><a href="/category.php?p=<?php echo $result_cate['categorySlug'] ?>"><?php echo $result_cate['categoryName']; ?></a></li>
+                        <?php
+                            }
+                        }
+                        ?>
+
 					</ul>
 					<!-- /NAV -->
 				</div>

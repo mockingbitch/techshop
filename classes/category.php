@@ -104,6 +104,11 @@ class category
         $alert = "Đã huỷ kích hoạt";
         return $alert;
     }
+    public function get_cate_name($id){
+        $query = "SELECT * FROM tbl_category WHERE cateid = '$id'";
+        $result = $this->db->select($query);
+        return $result;
+    }
 }
 
 ?>
