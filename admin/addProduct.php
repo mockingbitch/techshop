@@ -134,8 +134,6 @@ if($_SERVER['REQUEST_METHOD']=='POST' && isset($_POST['add'])){
         <!-- /.content -->
     </div>
     <script>
-
-        CKEDITOR.replace( 'editor1' );
-
+       CKEDITOR.replace('editor1');
     </script>
 <?php include 'inc/footer.php' ?>

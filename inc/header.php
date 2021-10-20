@@ -1,6 +1,8 @@
 <?php
 include_once 'lib/session.php';
 //Session::checkSession();
+ob_start();
+session_start();
 include_once 'classes/product.php';
 include_once 'classes/category.php';
 $product = new product();
@@ -60,11 +62,10 @@ if(isset($_GET['action']) && $_GET['action']=='logout'){
 						<li><a href="#"><i class="fa fa-phone"></i> +0123456789</a></li>
 						<li><a href="#"><i class="fa fa-envelope-o"></i> phongtq1@smartosc.com</a></li>
 						<li><a href="#"><i class="fa fa-map-marker"></i> 250 Kim Giang</a></li>
-<!--                        <li><a href="#"><i class="fa fa-map-marker"></i> --><?php //echo $_SERVER['fullname'];?><!--</a></li>-->
 					</ul>
 					<ul class="header-links pull-right">
-						<li><a href="login.php"><i class="fa fa-user-o"></i> <?php if (isset($_SERVER['name'])){
-                            echo $_SERVER['name'];
+						<li><a href="login.php"><i class="fa fa-user-o"></i> <?php if (isset($_SESSION['name'])){
+                            echo $_SESSION['name'];
                                 }
                                 else{
                                     echo "Tài khoản";
@@ -120,43 +121,40 @@ if(isset($_GET['action']) && $_GET['action']=='logout'){
 								<!-- /Wishlist -->
 
 								<!-- Cart -->
-								<div class="dropdown">
+								<div class="dropdown cart" id="listcart"  >
 									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 										<i class="fa fa-shopping-cart"></i>
 										<span>Giỏ hàng</span>
 										<div class="qty">3</div>
 									</a>
 									<div class="cart-dropdown">
-										<div class="cart-list">
+										<div class="cart-list"  >
+<!--                                            cart-->
+                                            <?php if (isset($_SESSION['cart'])) : ?>
+                                            <?php foreach ($_SESSION['cart'] as $key => $value): ?>
 											<div class="product-widget">
 												<div class="product-img">
-													<img src="./img/product01.png" alt="">
+													<img width="50px" src="/admin/uploads/products/<?php echo $value['img'] ?>" alt="">
 												</div>
 												<div class="product-body">
-													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
+													<h3 class="product-name"><a href="#"><?php echo $value['name'] ;?></a></h3>
+													<h4 class="product-price"><span class="qty"><?php echo $value['qty'] ;?>x</span><?php echo $value['price']*$value['qty'] ?> Đ</h4>
 												</div>
 												<button class="delete"><i class="fa fa-close"></i></button>
 											</div>
-
-											<div class="product-widget">
-												<div class="product-img">
-													<img src="./img/product02.png" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
-												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
-											</div>
+                                            <?php endforeach; ?>
+                                            <?php else:?>
+                                                <p>Chưa có sản phẩm nào trong giỏ hàng!</p>
+                                            <?php endif; ?>
+<!--                                            cart-->
 										</div>
 										<div class="cart-summary">
 											<small>3 Item(s) selected</small>
 											<h5>SUBTOTAL: $2940.00</h5>
 										</div>
 										<div class="cart-btns">
-											<a href="#">View Cart</a>
-											<a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+											<a href="/viewcart.php">Giỏ hàng</a>
+											<a href="/checkout.php">Thanh toán  <i class="fa fa-arrow-circle-right"></i></a>
 										</div>
 									</div>
 								</div>

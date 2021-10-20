@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 12, 2021 at 09:36 AM
+-- Generation Time: Oct 20, 2021 at 04:24 PM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.19
 
@@ -32,8 +32,50 @@ CREATE TABLE `tbl_admin` (
   `id` int(11) NOT NULL,
   `adminUser` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `adminPass` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `permission` int(11) NOT NULL
+  `permission` int(11) NOT NULL,
+  `adminName` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `adminAvatar` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `vkey` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `verified` int(11) DEFAULT NULL,
+  `createdate` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `tbl_admin`
+--
+
+INSERT INTO `tbl_admin` (`id`, `adminUser`, `adminPass`, `permission`, `adminName`, `adminAvatar`, `vkey`, `verified`, `createdate`) VALUES
+(21, 'phongtq1@smartosc.com', '9f48495bb4b98ac37a1a72c7e6490c7a', 1, 'Phong Trần', NULL, 'ab84b0fc31f881f082cd8e9e41ceb7b0', NULL, NULL),
+(22, 'phong11@gmail.com', '9f48495bb4b98ac37a1a72c7e6490c7a', 2, 'Tráº§n Quang Phong', NULL, 'b7c4f983d9ebf6402d9aaed18572f7c9', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_adminprofile`
+--
+
+CREATE TABLE `tbl_adminprofile` (
+  `id` int(11) NOT NULL,
+  `adminUser` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `adminName` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `phone` int(50) DEFAULT NULL,
+  `address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `website` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `github` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `facebook` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `twitter` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `instagram` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `img` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `tbl_adminprofile`
+--
+
+INSERT INTO `tbl_adminprofile` (`id`, `adminUser`, `adminName`, `phone`, `address`, `description`, `website`, `github`, `facebook`, `twitter`, `instagram`, `img`) VALUES
+(14, 'phongtq1@smartosc.com', 'Phong Trần', 1234567891, '250 Kim Giang', 'Back-end developer', 'techshop.test', 'https://mockingbitch.github.io', 'https://facebook.com/jarvis.ejr', 'jarvis', 'jarvis.ejr', '72d91bc481.jpg'),
+(15, 'phong11@gmail.com', 'Tráº§n Quang Phong', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -60,7 +102,7 @@ INSERT INTO `tbl_brand` (`brandid`, `brandName`, `brandDescription`, `brandSlug`
 (5, 'LG', 'eo j', 'lg', 1),
 (6, 'Dell Alien Da Ware', 'Ä‘eo', 'dell-alien-da-ware', 1),
 (7, 'Asus Republic of Gamers', 'a sÃºt', 'asus-republic-of-gamers', 1),
-(8, 'Acer', 'Ã¢y cy', 'acer', 0);
+(8, 'Acer', 'Ã¢y cy', 'acer', 1);
 
 -- --------------------------------------------------------
 
@@ -111,8 +153,35 @@ CREATE TABLE `tbl_product` (
 --
 
 INSERT INTO `tbl_product` (`productid`, `productName`, `cateid`, `brandid`, `productDescription`, `content`, `productPrice`, `productQuantity`, `img`, `productSlug`) VALUES
-(2, 'Iphone 13 Pro Max', 4, 2, '1232', '11212', 130000000, 20, 'e762a9a17f.', 'iphone-13-pro-max'),
-(3, 'Asus ROG', 3, 7, 'Asus ROG', '&lt;p&gt;Asus ROG&lt;/p&gt;', 3000000, 3, '7a9f4eb210.jpg', 'asus-rog');
+(3, 'Asus ROG', 3, 7, 'Asus ROG', '&lt;p&gt;Asus ROG&lt;/p&gt;', 3000000, 3, '7a9f4eb210.jpg', 'asus-rog'),
+(4, 'Poco X3 Pro', 4, 5, 'Poco X3 Pro', '&lt;p&gt;Poco X3 Pro&lt;/p&gt;', 1000000, 23, '7d345bcaa0.jpg', 'poco-x3-pro'),
+(5, 'Iphone 11', 4, 2, 'Iphone 11', '&lt;p&gt;Iphone 11&lt;/p&gt;', 11000000, 62, 'fc511b87f8.jpg', 'iphone-11'),
+(6, 'Iphone 11', 4, 2, 'Iphone 11', '&lt;p&gt;Iphone 11&lt;/p&gt;', 11000000, 62, 'bc658d5f0c.jpg', 'iphone-11'),
+(7, 'Google Pixel 4', 4, 5, 'Google Pixel 4', '&lt;p&gt;Google Pixel 4&lt;/p&gt;', 4000000, 22, '97dbf35997.jpg', 'google-pixel-4'),
+(8, 'Samsung galaxy s10', 4, 3, 'Samsung galaxy s10', '&lt;p&gt;Samsung galaxy s10&lt;/p&gt;', 6000000, 64, '22dbcba4c0.jpg', 'samsung-galaxy-s10');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_user`
+--
+
+CREATE TABLE `tbl_user` (
+  `userid` int(11) NOT NULL,
+  `username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `usermail` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `phone` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `fullname` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `tbl_user`
+--
+
+INSERT INTO `tbl_user` (`userid`, `username`, `usermail`, `password`, `phone`, `address`, `fullname`) VALUES
+(1, 'phong', 'phong@gmail.com', '9f48495bb4b98ac37a1a72c7e6490c7a', '0123654789', '250 HN', 'Phong Trần Quang');
 
 --
 -- Indexes for dumped tables
@@ -122,6 +191,12 @@ INSERT INTO `tbl_product` (`productid`, `productName`, `cateid`, `brandid`, `pro
 -- Indexes for table `tbl_admin`
 --
 ALTER TABLE `tbl_admin`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_adminprofile`
+--
+ALTER TABLE `tbl_adminprofile`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -143,6 +218,12 @@ ALTER TABLE `tbl_product`
   ADD PRIMARY KEY (`productid`);
 
 --
+-- Indexes for table `tbl_user`
+--
+ALTER TABLE `tbl_user`
+  ADD PRIMARY KEY (`userid`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -150,7 +231,13 @@ ALTER TABLE `tbl_product`
 -- AUTO_INCREMENT for table `tbl_admin`
 --
 ALTER TABLE `tbl_admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT for table `tbl_adminprofile`
+--
+ALTER TABLE `tbl_adminprofile`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `tbl_brand`
@@ -168,7 +255,13 @@ ALTER TABLE `tbl_category`
 -- AUTO_INCREMENT for table `tbl_product`
 --
 ALTER TABLE `tbl_product`
-  MODIFY `productid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `productid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `tbl_user`
+--
+ALTER TABLE `tbl_user`
+  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

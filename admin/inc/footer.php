@@ -5,7 +5,6 @@
     </div>
     <strong>Copyright &copy; 2021 <a href="#">Phong Trần Quang</a>.</strong> All rights reserved.
 </footer>
-
 <!-- Control Sidebar -->
 <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->

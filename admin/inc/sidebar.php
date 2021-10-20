@@ -27,7 +27,7 @@ include '../lib/session.php';
     <link rel="stylesheet" href="dist/css/style.css">
     <link rel="stylesheet" href="dist/css/adminlte.min.css">
     <script src="/ckeditor/ckeditor.js"></script>
-
+<!--    <script src="/ckeditor/ckfinder/ckfinder.js"></script>-->
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -253,13 +253,13 @@ include '../lib/session.php';
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="layout/top-nav.html" class="nav-link">
+                                <a href="/admin/addPost.php" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Thêm blog mới</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="layout/top-nav-sidebar.html" class="nav-link">
+                                <a href="/admin/listPost.php" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Danh sách blog</p>
                                 </a>

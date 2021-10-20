@@ -42,6 +42,7 @@ else{
             <!-- /Product main img -->
 
             <!-- Product thumb imgs -->
+
             <div class="col-md-2  col-md-pull-5">
                 <div id="product-imgs">
                     <div class="product-preview">
@@ -107,7 +108,9 @@ else{
                                 <span class="qty-down">-</span>
                             </div>
                         </div>
-                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                        <button class="add-to-cart-btn" onclick="addCart(<?php echo $result_pr['productid'] ?>)"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
+
+                        <button style="margin: 30px 0px 0px 170px" class="add-to-cart-btn"><a href="viewcart.php" style="color: white;font-weight: bold"><i class="fa fa-shopping-cart"></i> Xem giỏ hàng</a></button>
                     </div>
 
                     <ul class="product-btns">
@@ -398,7 +401,7 @@ else{
                         </div>
                     </div>
                     <div class="add-to-cart">
-                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                        <button class="add-to-cart-btn" onclick="addCart(<?php echo $result_related['productid'] ?>)"><i class="fa fa-shopping-cart"></i> add to cart</button>
                     </div>
                 </div>
             </div>

@@ -97,14 +97,21 @@
 			<!-- /bottom footer -->
 		</footer>
 		<!-- /FOOTER -->
-
+        <script>
+            function addCart(productid){
+                $.post("shoppingcart.php",{'productid':productid},function (data,status){
+                    alert('Đã thêm vào giỏ hàng');
+                    $("#listcart").load("http://techshop.test/ .cart");
+                });
+            }
+        </script>
 		<!-- jQuery Plugins -->
-		<script src="js/jquery.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script src="js/slick.min.js"></script>
-		<script src="js/nouislider.min.js"></script>
-		<script src="js/jquery.zoom.min.js"></script>
-		<script src="js/main.js"></script>
+		<script src="/js/jquery.min.js"></script>
+		<script src="/js/bootstrap.min.js"></script>
+		<script src="/js/slick.min.js"></script>
+		<script src="/js/nouislider.min.js"></script>
+		<script src="/js/jquery.zoom.min.js"></script>
+		<script src="/js/main.js"></script>
 
 	</body>
 </html>
