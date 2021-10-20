@@ -14,4 +14,8 @@ if(isset($_POST['id']) && isset($_POST['num'])){
         $_SESSION['cart']=$cart;
     }
 }
+if (isset($_POST['id']) && $_POST['num']==0 ){
+    $id = $_POST['id'];
+    unset($_SESSION['cart'][$id]);
+}
 ?>

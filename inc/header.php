@@ -23,7 +23,7 @@ if(isset($_GET['action']) && $_GET['action']=='logout'){
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-		<title>Techshop</title>
+		<title>Tech Shop</title>
 
 		<!-- Google font -->
 		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
@@ -84,7 +84,7 @@ if(isset($_GET['action']) && $_GET['action']=='logout'){
 						<!-- LOGO -->
 						<div class="col-md-3">
 							<div class="header-logo">
-								<a href="#" class="logo">
+								<a href="/" class="logo">
 									<img src="../img/logo.png" alt="">
 								</a>
 							</div>
@@ -121,7 +121,7 @@ if(isset($_GET['action']) && $_GET['action']=='logout'){
 								<!-- /Wishlist -->
 
 								<!-- Cart -->
-								<div class="dropdown cart" id="listcart"  >
+								<div class="dropdown"   >
 									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 										<i class="fa fa-shopping-cart"></i>
 										<span>Giỏ hàng</span>
@@ -131,6 +131,7 @@ if(isset($_GET['action']) && $_GET['action']=='logout'){
 										<div class="cart-list"  >
 <!--                                            cart-->
                                             <?php if (isset($_SESSION['cart'])) : ?>
+                                            <?php $subtotal = 0; ?>
                                             <?php foreach ($_SESSION['cart'] as $key => $value): ?>
 											<div class="product-widget">
 												<div class="product-img">
@@ -138,10 +139,12 @@ if(isset($_GET['action']) && $_GET['action']=='logout'){
 												</div>
 												<div class="product-body">
 													<h3 class="product-name"><a href="#"><?php echo $value['name'] ;?></a></h3>
-													<h4 class="product-price"><span class="qty"><?php echo $value['qty'] ;?>x</span><?php echo $value['price']*$value['qty'] ?> Đ</h4>
+													<h4 class="product-price"><span class="qty"><?php echo $value['qty'] ;?>x</span><?php echo $total = $value['price']*$value['qty'] ?> Đ</h4>
 												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
+                                                <?php $subtotal = $subtotal+$total;  ?>
+												<button class="delete" onclick="removeCart(<?php echo $key; ?>)"><i class="fa fa-close"></i></button>
 											</div>
+
                                             <?php endforeach; ?>
                                             <?php else:?>
                                                 <p>Chưa có sản phẩm nào trong giỏ hàng!</p>
@@ -149,8 +152,8 @@ if(isset($_GET['action']) && $_GET['action']=='logout'){
 <!--                                            cart-->
 										</div>
 										<div class="cart-summary">
-											<small>3 Item(s) selected</small>
-											<h5>SUBTOTAL: $2940.00</h5>
+<!--											<small>3 Item(s) selected</small>-->
+											<h5>Tổng tiền: <?php echo number_format($subtotal,0,',','.'); ?> Đ</h5>
 										</div>
 										<div class="cart-btns">
 											<a href="/viewcart.php">Giỏ hàng</a>
@@ -188,7 +191,7 @@ if(isset($_GET['action']) && $_GET['action']=='logout'){
 				<div id="responsive-nav">
 					<!-- NAV -->
 					<ul class="main-nav nav navbar-nav">
-						<li class="active"><a href="#">Trang chủ</a></li>
+						<li class="active"><a href="/">Trang chủ</a></li>
                         <?php
                         $show_category = $cate->show_category();
                         if ($show_category){
@@ -208,3 +211,10 @@ if(isset($_GET['action']) && $_GET['action']=='logout'){
 			<!-- /container -->
 		</nav>
 		<!-- /NAVIGATION -->
+    <script>
+        function removeCart(id){
+            $.post('removecart.php',{'id':id},function(data){
+                $("#listcart").load("http://techshop.test/viewcart.php #cart");
+            });
+        }
+    </script>

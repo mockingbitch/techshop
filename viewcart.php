@@ -14,6 +14,7 @@ include 'inc/header.php';
                 <table class="table shopping-summery" id="cart">
                     <thead>
                     <tr class="main-hading">
+                        <th> </th>
                         <th>Ảnh sản phẩm</th>
                         <th>Tên sản phẩm</th>
                         <th class="text-center">Đơn giá</th>
@@ -25,6 +26,7 @@ include 'inc/header.php';
                     <tbody>
                     <?php foreach ($_SESSION['cart'] as $key => $value ) : ?>
                     <tr>
+                        <td><button onclick="removeCart(<?php echo $key;  ?>)">X</button></td>
                         <td class="image" data-title="No"><img width="100px" src="../admin/uploads/products/<?php echo $value['img'] ?>" alt="#"></td>
                         <td class="product-des" data-title="Description">
                             <p class="product-name"><a href="#"><?php echo $value['name'] ?></a></p>
@@ -98,6 +100,11 @@ include 'inc/header.php';
     function updateCart(id){
         num = $("#qty_"+id).val();
         $.post('updatecart.php',{'id':id,'num':num},function(data){
+            $("#listcart").load("http://techshop.test/viewcart.php #cart");
+        });
+    }
+    function removeCart(id){
+        $.post('updatecart.php',{'id':id,'num':0},function(data){
             $("#listcart").load("http://techshop.test/viewcart.php #cart");
         });
     }
