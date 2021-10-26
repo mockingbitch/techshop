@@ -172,7 +172,7 @@ if(isset($_GET['action']) && $_GET['action']=='logout'){
 										<div class="cart-summary">
 <!--											<small>3 Item(s) selected</small>-->
                                             <?php
-                                                if (isset($_SESSION['cart'])){ 
+                                                if (isset($_SESSION['cart'])){
                                                     ?>
                                                     <h5>Tổng tiền: <?php echo number_format($subtotal,0,',','.'); ?> Đ</h5>
                                             <?php
