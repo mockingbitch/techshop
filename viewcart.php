@@ -84,8 +84,8 @@ include 'inc/header.php';
                                     <li class="last">Tổng <span><?php echo $subtotal ?></span></li>
                                 </ul>
                                 <div class="button5">
-                                    <a href="#" class="btn"><h4>Thanh toán</h4></a>
-                                    <a href="#" class="btn"><h4>Tiếp tục mua hàng</h4></a>
+                                    <a href="checkout.php" class="btn"><h4>Thanh toán</h4></a>
+                                    <a href="/" class="btn"><h4>Tiếp tục mua hàng</h4></a>
                                 </div>
                             </div>
                         </div>

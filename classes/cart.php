@@ -59,39 +59,50 @@ class cart
         }
 
     }
-    public function show_cart(){
-        if (isset($_SESSION['cart']) && (is_array($_SESSION['cart']))){
-            for ($i = 0; $i < sizeof($_SESSION['cart']) ; $i++){
-                $total = $_SESSION['cart'][$i]['2'] * $_SESSION['cart'][$i]['4'];
-                echo '<tr>
-                        <td class="image" data-title="No"><img src="../admin/uploads/products/'.$_SESSION['cart'][$i][3].'" alt="#"></td>
-                        <td class="product-des" data-title="Description">
-                            <p class="product-name"><a href="#">'.$_SESSION['cart'][$i][0].'</a></p>
-                           
-                        </td>
-                        <td class="price" data-title="Price"><span>'.$_SESSION['cart'][$i][1].' </span></td>
-                        <td class="qty" data-title="Qty"><!-- Input Order -->
-                            <div class="input-group">
-                                <div class="button minus">
-                                    <button type="button" class="btn btn-primary btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
-                                        <i class="ti-minus"></i>
-                                    </button>
-                                </div>
-                                <input type="text" name="quant[1]" class="input-number"  data-min="1" data-max="100" value="1">
-                                <div class="button plus">
-                                    <button type="button" class="btn btn-primary btn-number" data-type="plus" data-field="quant[1]">
-                                        <i class="ti-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <!--/ End Input Order -->
-                        </td>
-                        <td class="total-amount" data-title="Total"><span>'.$total.'</span></td>
-                        <td class="action" data-title="Remove"><a href="#"><i class="ti-trash remove-icon"></i></a></td>
-                    </tr>';
-            }
-            print_r($_SESSION['cart']);
+    public function show_order(){
+        $query = "SELECT * FROM tbl_order ORDER BY cartid DESC";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    public function activate($id)
+    {
+        $query = "UPDATE tbl_order SET status = '1' WHERE cartid = '$id'";
+        $result = $this->db->update($query);
+        $alert = "Đã kích hoạt";
+        return $alert;
+    }
+    public function deactivate($id)
+    {
+        $query = "UPDATE tbl_order SET status = '0' WHERE cartid = '$id'";
+        $result = $this->db->update($query);
+        $alert = "Đã huỷ kích hoạt";
+        return $alert;
+    }
+    public function delete_order($id)
+    {
+        $query = "DELETE FROM tbl_order WHERE cartid ='$id'";
+        $result = $this->db->delete($query);
+
+        if ($result) {
+            $alert = "<span class='success' style = 'color:green; font-weight:bold'>Xoá thành công</span>";
+            return $alert;
+        } else {
+            $alert = "<span class='error' style = 'color:red; font-weight:bold'>Thất bại</span>";
+            return $alert;
         }
     }
+    public function show_order_detail($id){
+        $query = "SELECT a.* FROM tbl_order as a, tbl_orderdetail as b 
+                    WHERE a.cartid = '$id' AND a.cartcode = b.cartcode LIMIT 1";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    public function show_order_item($id){
+        $query = "SELECT b.* FROM tbl_order as a, tbl_orderdetail as b 
+                    WHERE a.cartid = '$id' AND a.cartcode = b.cartcode";
+        $result = $this->db->select($query);
+        return $result;
+    }
+
 }
 ?>

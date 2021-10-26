@@ -260,7 +260,7 @@ else{
                                 </div>
                             </div>
                             <div class="add-to-cart">
-                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
+                                <button class="add-to-cart-btn" onclick="addCart(<?php echo $result_cate_product['productid'] ?>)"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
                             </div>
                         </div>
                     </div>

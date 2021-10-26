@@ -26,17 +26,22 @@ class user
             return $alert;
         }
         else{
+            echo  $username, $userpass;
             $query = "SELECT * FROM tbl_user WHERE username = '$username' AND password  = '$userpass' LIMIT 1";
             $result = $this->db->select($query);
-//            print_r($result);
-            if($result!=false){
+            var_dump($result);
+            if($result){
+                echo "aas";
                 $value = $result->fetch_assoc();
                 Session::set('userlogin',true);
                 Session::set('userid',$value['userid']);
                 Session::set('username',$value['username']);
                 Session::set('password',$value['password']);
+                Session::set('usermail',$value['usermail']);
+                Session::set('phone',$value['phone']);
                 Session::set('fullname',$value['fullname']);
-                header('Location:index.php');
+//                $_SESSION['user'] = $value;
+                header('location:index.php');
                 $alert = "Success";
                 return $alert;
             }

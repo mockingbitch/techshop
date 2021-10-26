@@ -7,6 +7,9 @@ include_once 'classes/product.php';
 include_once 'classes/category.php';
 $product = new product();
 $cate = new category();
+if (isset($_GET['logout'])){
+    Session::destroy();
+}
 ?>
 <?php
 if(isset($_GET['action']) && $_GET['action']=='logout'){
@@ -64,12 +67,25 @@ if(isset($_GET['action']) && $_GET['action']=='logout'){
 						<li><a href="#"><i class="fa fa-map-marker"></i> 250 Kim Giang</a></li>
 					</ul>
 					<ul class="header-links pull-right">
-						<li><a href="login.php"><i class="fa fa-user-o"></i> <?php if (isset($_SESSION['name'])){
-                            echo $_SESSION['name'];
-                                }
-                                else{
-                                    echo "Tài khoản";
-                                } ?></a></li>
+                        <?php
+                            if (isset($_SESSION['username'])){?>
+                                <li>
+                                    <div class="dropdown">
+                                        <button > <i class="fa fa-user-o"></i><?= $_SESSION['username'] ?></button>
+                                        <div class="dropdown-content">
+                                            <a href="userinfo.php" style="color: black"><i class="fa fa-user-o"></i>Thông tin</a>
+                                            <hr>
+                                            <a href="?logout" style="color: red">Đăng xuất</a>
+                                        </div>
+                                    </div>
+                                </li>
+                        <?php
+                            }
+                            else{?>
+                                <li><a href="login.php"><i class="fa fa-user-o"></i> Tài khoản</a></li>
+                        <?php
+                            }
+                            ?>
 					</ul>
 				</div>
 			</div>
@@ -85,7 +101,7 @@ if(isset($_GET['action']) && $_GET['action']=='logout'){
 						<div class="col-md-3">
 							<div class="header-logo">
 								<a href="/" class="logo">
-									<img src="../img/logo.png" alt="">
+                                    <img src="../admin/dist/img/logo.svg" width="60%" alt="">
 								</a>
 							</div>
 						</div>
@@ -141,7 +157,9 @@ if(isset($_GET['action']) && $_GET['action']=='logout'){
 													<h3 class="product-name"><a href="#"><?php echo $value['name'] ;?></a></h3>
 													<h4 class="product-price"><span class="qty"><?php echo $value['qty'] ;?>x</span><?php echo $total = $value['price']*$value['qty'] ?> Đ</h4>
 												</div>
-                                                <?php $subtotal = $subtotal+$total;  ?>
+                                                <?php $subtotal = $subtotal+$total;
+
+                                                ?>
 												<button class="delete" onclick="removeCart(<?php echo $key; ?>)"><i class="fa fa-close"></i></button>
 											</div>
 
@@ -153,8 +171,16 @@ if(isset($_GET['action']) && $_GET['action']=='logout'){
 										</div>
 										<div class="cart-summary">
 <!--											<small>3 Item(s) selected</small>-->
-											<h5>Tổng tiền: <?php echo number_format($subtotal,0,',','.'); ?> Đ</h5>
-										</div>
+                                            <?php
+                                                if (isset($_SESSION['cart'])){ 
+                                                    ?>
+                                                    <h5>Tổng tiền: <?php echo number_format($subtotal,0,',','.'); ?> Đ</h5>
+                                            <?php
+                                            }else{
+                                                    echo '';
+                                                }
+                                            ?>
+                                        </div>
 										<div class="cart-btns">
 											<a href="/viewcart.php">Giỏ hàng</a>
 											<a href="/checkout.php">Thanh toán  <i class="fa fa-arrow-circle-right"></i></a>

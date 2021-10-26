@@ -57,7 +57,7 @@
 												<div class="product-btns">
 													<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
 													<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-													<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp"><a
+													<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp"><a style="color: white"
                                                                     href="/product.php?q=<?php echo $result['productSlug'] ?>">Xem nhanh</a></span></button>
 												</div>
 											</div>

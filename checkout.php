@@ -1,9 +1,18 @@
 <?php include 'inc/header.php'; ?>
+<?php
+    include 'classes/cartcheckout.php';
+    $cartcheckout = new cartcheckout();
+    if ($_SERVER['REQUEST_METHOD']=='POST' && isset($_POST['checkout'])){
+        $checkout = $cartcheckout->addcart($_POST,$_SESSION['cart']);
+    }
+?>
+
 <div class="section">
     <!-- container -->
     <div class="container">
         <!-- row -->
         <div class="row">
+            <form action="" method="POST">
 
             <div class="col-md-7">
                 <!-- Billing Details -->
@@ -11,42 +20,46 @@
                     <div class="section-title">
                         <h3 class="title">Thông tin nhận hàng</h3>
                     </div>
-                    <div class="form-group">
-                        <input class="input" type="text" name="customername" placeholder="Họ tên người nhận">
-                    </div>
-                    <div class="form-group">
-                        <input class="input" type="email" name="email" placeholder="Email">
-                    </div>
-                    <div class="form-group">
-                        <input class="input" type="text" name="city" placeholder="Tỉnh/Thành phố">
-                    </div>
-                    <div class="form-group">
-                        <input class="input" type="text" name="addressdetail" placeholder="Đường / Xã / Quận">
-                    </div>
-                    <div class="form-group">
-                        <input class="input" type="tel" name="sdt" placeholder="Số điện thoại">
-                    </div>
-<!--                    <div class="form-group">-->
-<!--                        <div class="input-checkbox">-->
-<!--                            <input type="checkbox" id="create-account">-->
-<!--                            <label for="create-account">-->
-<!--                                <span></span>-->
-<!--                                Tạo tài khoản?-->
-<!--                            </label>-->
-<!--                            <div class="caption">-->
-<!--                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>-->
-<!--                                <input class="input" type="password" name="password" placeholder="Enter Your Password">-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                    <?php
+                        if (isset($checkout)){
+                            echo $checkout;
+                        }
+                    ?>
+                    <?php
+                        if (isset($_SESSION['username'])){
+                            ?>
+                            <div class="form-group">
+                                <input class="input" type="text" name="customername" value="<?= $_SESSION['fullname'] ?>">
+                            </div>
+                            <div class="form-group">
+                                <input class="input" type="email" name="email" value="<?= $_SESSION['usermail'] ?>">
+                            </div>
+                            <div class="form-group">
+                                <input class="input" type="text" name="city" placeholder="Tỉnh/Thành phố">
+                            </div>
+                            <div class="form-group">
+                                <input class="input" type="text" name="addressdetail" placeholder="Đường / Xã / Quận">
+                            </div>
+                            <div class="form-group">
+                                <input class="input" type="tel" name="sdt" value="<?= $_SESSION['phone'] ?>">
+                            </div>
+                            <!-- Order notes -->
+                            <div class="order-notes">
+                                <textarea class="input" name="note" placeholder="Ghi chú"></textarea>
+                            </div>
+                            <!-- /Order notes -->
+                    <?php
+                        }
+                        else{
+                            ?>
+                            <h3>Vui lòng <a href="login.php" style=" font-weight: bold">đăng nhập</a> để tiếp tục.</h3>
+                    <?php
+                        }
+                    ?>
                 </div>
 
 
-                <!-- Order notes -->
-                <div class="order-notes">
-                    <textarea class="input" name="note" placeholder="Ghi chú"></textarea>
-                </div>
-                <!-- /Order notes -->
+
             </div>
 
             <!-- Order Details -->
@@ -54,27 +67,34 @@
                 <div class="section-title text-center">
                     <h3 class="title">Đơn hàng của bạn</h3>
                 </div>
+
                 <div class="order-summary">
                     <div class="order-col">
                         <div><strong>Sản phẩm</strong></div>
                         <div><strong>Tổng</strong></div>
                     </div>
+                    <?php $subtotal = 0; ?>
+                    <?php foreach ($_SESSION['cart'] as $key => $value): ?>
                     <div class="order-products">
                         <div class="order-col">
-                            <div>1x Product Name Goes Here</div>
-                            <div>$980.00</div>
+                            <div><?php echo $value['qty'] ?> x <?php echo $value['name'] ?></div>
+                            <div><?php $total = $value['qty']*$value['price'];
+                               echo number_format($total,0,',','.');
+                            ?> Đ</div>
                         </div>
-
                     </div>
+                    <?php $subtotal+=$total; ?>
+                    <?php endforeach; ?>
                     <div class="order-col">
-                        <div>Shiping</div>
+                        <div>Shipping</div>
                         <div><strong>FREE</strong></div>
                     </div>
                     <div class="order-col">
                         <div><strong>Tổng thanh toán</strong></div>
-                        <div><strong class="order-total">$2940.00</strong></div>
+                        <div><strong class="order-total"><?php echo number_format($subtotal,0,',','.');?> Đ</strong></div>
                     </div>
                 </div>
+
                 <div class="payment-method">
                     <div class="input-radio">
                         <input type="radio" name="payment" id="payment-1">
@@ -114,8 +134,9 @@
                         I've read and accept the <a href="#">terms & conditions</a>
                     </label>
                 </div>
-                <a href="#" class="primary-btn order-submit">Xác nhận đơn hàng</a>
+                <input class="primary-btn order-submit" type="submit" name="checkout" value="Xác nhận đơn hàng">
             </div>
+            </form>
             <!-- /Order Details -->
         </div>
         <!-- /row -->
