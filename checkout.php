@@ -74,6 +74,8 @@
                         <div><strong>Tổng</strong></div>
                     </div>
                     <?php $subtotal = 0; ?>
+                    <?php if (isset($_SESSION['cart'])){
+                    ?>
                     <?php foreach ($_SESSION['cart'] as $key => $value): ?>
                     <div class="order-products">
                         <div class="order-col">
@@ -85,6 +87,11 @@
                     </div>
                     <?php $subtotal+=$total; ?>
                     <?php endforeach; ?>
+                    <?php
+                    }else{
+                        echo '<h4 style="color: red">Chưa có sản phẩm nào trong giỏ hàng, vui lòng thêm sản phẩm để tiến hành thanh toán!!!</h4>';
+                    }
+                    ?>
                     <div class="order-col">
                         <div>Shipping</div>
                         <div><strong>FREE</strong></div>
@@ -94,7 +101,9 @@
                         <div><strong class="order-total"><?php echo number_format($subtotal,0,',','.');?> Đ</strong></div>
                     </div>
                 </div>
-
+                <?php
+                    if (isset($_SESSION['cart'])){
+                ?>
                 <div class="payment-method">
                     <div class="input-radio">
                         <input type="radio" name="payment" id="payment-1">
@@ -135,6 +144,9 @@
                     </label>
                 </div>
                 <input class="primary-btn order-submit" type="submit" name="checkout" value="Xác nhận đơn hàng">
+                <?php
+                    }
+                    ?>
             </div>
             </form>
             <!-- /Order Details -->

@@ -11,6 +11,7 @@ if (isset($_GET['logout'])){
     Session::destroy();
 }
 ?>
+
 <?php
 if(isset($_GET['action']) && $_GET['action']=='logout'){
     Session::destroy();
@@ -24,7 +25,6 @@ if(isset($_GET['action']) && $_GET['action']=='logout'){
 
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
 		<title>Tech Shop</title>
 
@@ -116,16 +116,18 @@ if(isset($_GET['action']) && $_GET['action']=='logout'){
 										<option value="1">Category 01</option>
 										<option value="1">Category 02</option>
 									</select>
-									<input class="input" placeholder="Tìm kiếm">
-									<button class="search-btn">Tìm kiếm</button>
+                                    <form method="GET">
+									<input class="input" name="textsearch" placeholder="Tìm kiếm">
+									<button formaction="../search-result.php" class="search-btn" type="submit" >Tìm kiếm</button>
+                                    </form>
 								</form>
 							</div>
 						</div>
 						<!-- /SEARCH BAR -->
 
 						<!-- ACCOUNT -->
-						<div class="col-md-3 clearfix">
-							<div class="header-ctn">
+						<div class="col-md-3 clearfix" id="listcart" >
+							<div class="header-ctn cart">
 								<!-- Wishlist -->
 								<div>
 									<a href="#">
@@ -137,7 +139,7 @@ if(isset($_GET['action']) && $_GET['action']=='logout'){
 								<!-- /Wishlist -->
 
 								<!-- Cart -->
-								<div class="dropdown"   >
+								<div class="dropdown ">
 									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 										<i class="fa fa-shopping-cart"></i>
 										<span>Giỏ hàng</span>
@@ -239,8 +241,8 @@ if(isset($_GET['action']) && $_GET['action']=='logout'){
 		<!-- /NAVIGATION -->
     <script>
         function removeCart(id){
-            $.post('removecart.php',{'id':id},function(data){
-                $("#listcart").load("http://techshop.test/viewcart.php #cart");
+            $.post('updatecart.php',{'id':id},function(data){
+                $("#listcart").load("http://techshop.test/ .cart");
             });
         }
     </script>

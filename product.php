@@ -13,13 +13,14 @@ else{
     <!-- container -->
     <div class="container">
         <!-- row -->
+        <?php
+        $show_single_product = $product->show_single_product($productslug);
+        if ($show_single_product){
+        while ($result_pr = $show_single_product->fetch_assoc()){
+        ?>
         <div class="row">
             <!-- Product main img -->
-            <?php
-                $show_single_product = $product->show_single_product($productslug);
-                if ($show_single_product){
-                    while ($result_pr = $show_single_product->fetch_assoc()){
-            ?>
+
             <div class="col-md-5 col-md-push-2">
                 <div id="product-main-img">
                     <div class="product-preview">
@@ -114,12 +115,12 @@ else{
                     </div>
 
                     <ul class="product-btns">
-                        <li><a href="#"><i class="fa fa-heart-o"></i> add to wishlist</a></li>
-                        <li><a href="#"><i class="fa fa-exchange"></i> add to compare</a></li>
+                        <li><a href="#"><i class="fa fa-heart-o"></i> Yêu thích</a></li>
+                        <li><a href="#"><i class="fa fa-exchange"></i> So sánh</a></li>
                     </ul>
 
                     <ul class="product-links">
-                        <li>Category:</li>
+                        <li>Danh mục:</li>
                         <li><a href="#">Headphones</a></li>
                         <li><a href="#">Accessories</a></li>
                     </ul>
@@ -346,15 +347,16 @@ else{
                         </div>
                         <!-- /tab3  -->
                     </div>
-                    <?php
-                    }
-                    }
-                    ?>
+
                     <!-- /product tab content  -->
                 </div>
             </div>
             <!-- /product tab -->
         </div>
+            <?php
+        }
+        }
+        ?>
         <!-- /row -->
     </div>
     <!-- /container -->

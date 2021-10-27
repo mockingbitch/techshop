@@ -5,13 +5,13 @@ include 'inc/header.php';
 <div class="shopping-cart section">
     <div class="container">
         <div class="row">
-            <div class="col-12" id="listcart">
+            <div class="col-12" id="list-cart">
                 <!-- Shopping Summery -->
                 <?php if (isset($_SESSION['cart'])): ?>
                 <?php
                     $subtotal = 0;
                     ?>
-                <table class="table shopping-summery" id="cart">
+                <table class="table shopping-summery cart-change">
                     <thead>
                     <tr class="main-hading">
                         <th> </th>
@@ -75,17 +75,19 @@ include 'inc/header.php';
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-7 col-12">
-                            <div class="right">
+                        <div class="col-lg-4 col-md-7 col-12" id="sub" >
+                            <div class="right sub-change" >
                                 <ul>
-                                    <li><h3>Thành tiền: <span><?php echo number_format($subtotal,0,',','.');?> Đ</span></h3></li>
+                                    <li><h4 >Thành tiền: <span><?php echo number_format($subtotal,0,',','.');?> Đ</span></h4></li>
                                     <li>Vận chuyển<span>Free</span></li>
-<!--                                    <li>You Save<span>$20.00</span></li>-->
-                                    <li class="last">Tổng <span><?php echo $subtotal ?></span></li>
+<!--                                    <li>You Save<span>$20.00</span></li>-->Tổng: &emsp; &emsp; <span style="color: red;font-size: 30px;font-weight: bold"><?php echo number_format($subtotal,0,',','.');?> Đ</span>
+                                     <li class="last"></li>
                                 </ul>
                                 <div class="button5">
-                                    <a href="checkout.php" class="btn"><h4>Thanh toán</h4></a>
-                                    <a href="/" class="btn"><h4>Tiếp tục mua hàng</h4></a>
+                                    <div class="row">
+                                        <button class="btn btn-danger col-md-5"><a href="checkout.php" class="btn"><h4>Thanh toán</h4></a></button>
+                                        <button style="margin-left: 10px" class="btn btn-default col-md-5"><a href="/" class="btn"><h4>Tiếp tục mua</h4></a></button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -100,12 +102,15 @@ include 'inc/header.php';
     function updateCart(id){
         num = $("#qty_"+id).val();
         $.post('updatecart.php',{'id':id,'num':num},function(data){
-            $("#listcart").load("http://techshop.test/viewcart.php #cart");
+            $("#list-cart").load("http://techshop.test/viewcart.php .cart-change");
+            $("#sub").load("http://techshop.test/viewcart.php .sub-change");
         });
     }
     function removeCart(id){
         $.post('updatecart.php',{'id':id,'num':0},function(data){
-            $("#listcart").load("http://techshop.test/viewcart.php #cart");
+            $("#list-cart").load("http://techshop.test/viewcart.php .cart-change");
+            $("#sub").load("http://techshop.test/viewcart.php .sub-change");
+
         });
     }
 </script>

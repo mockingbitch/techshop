@@ -2,11 +2,9 @@
 include_once 'inc/header.php';
 ?>
 <?php
-if(!isset($_GET['p']) || $_GET['p'] == NULL) {
-    echo "<script>window.location='index.php'</script>";
-}
-else{
-    $cateslug = $_GET['p'];
+if (isset($_GET['textsearch']) && $_GET['textsearch']!=NULL){
+    $textsearch = $_GET['textsearch'];
+    $search_result = $product->search_product($textsearch);
 }
 ?>
 <div class="section">
@@ -227,46 +225,46 @@ else{
                 <!-- store products -->
                 <div class="row">
                     <?php
-                    $show_cate_product = $product->show_product_by_category($cateslug);
+                    $show_cate_product = $product->search_product($textsearch);
                     if ($show_cate_product){
                         while ($result_cate_product = $show_cate_product->fetch_assoc()){
                             ?>
-                    <!-- product -->
-                    <div class="col-md-4 col-xs-6">
-                        <div class="product">
-                            <div class="product-img">
-                                <img src="admin/uploads/products/<?php echo $result_cate_product['img'] ?>" alt="">
-                                <div class="product-label">
-                                    <span class="sale">-30%</span>
-                                    <span class="new">NEW</span>
+                            <!-- product -->
+                            <div class="col-md-4 col-xs-6">
+                                <div class="product">
+                                    <div class="product-img">
+                                        <img src="admin/uploads/products/<?php echo $result_cate_product['img'] ?>" alt="">
+                                        <div class="product-label">
+                                            <span class="sale">-30%</span>
+                                            <span class="new">NEW</span>
+                                        </div>
+                                    </div>
+                                    <div class="product-body">
+                                        <!--                                <p class="product-category">Category</p>-->
+                                        <h3 class="product-name"><a href="#"><?php $result_cate_product['productName']; ?></a></h3>
+                                        <h4 class="product-price"><?php echo number_format($result_cate_product['productPrice'],0,',','.');?> Đ</del></h4>
+                                        <div class="product-rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                        <div class="product-btns">
+                                            <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                            <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+                                            <button class="quick-view"><i class="fa fa-eye"></i><span style="color: white" class="tooltipp"><a
+                                                        href="/product.php?q=<?php echo $result_cate_product['productSlug'] ?>">quick view</a></span></button>
+                                        </div>
+                                    </div>
+                                    <div class="add-to-cart">
+                                        <button class="add-to-cart-btn" onclick="addCart(<?php echo $result_cate_product['productid'] ?>)"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="product-body">
-<!--                                <p class="product-category">Category</p>-->
-                                <h3 class="product-name"><a href="#"><?php echo $result_cate_product['productName']; ?></a></h3>
-                                <h4 class="product-price"><?php echo number_format($result_cate_product['productPrice'],0,',','.');?> Đ</del></h4>
-                                <div class="product-rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <div class="product-btns">
-                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                    <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                    <button class="quick-view"><i class="fa fa-eye"></i><span style="color: white" class="tooltipp"><a
-                                                    href="/product.php?q=<?php echo $result_cate_product['productSlug'] ?>">quick view</a></span></button>
-                                </div>
-                            </div>
-                            <div class="add-to-cart">
-                                <button class="add-to-cart-btn" onclick="addCart(<?php echo $result_cate_product['productid'] ?>)"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /product -->
-                    <?php
-                    }
+                            <!-- /product -->
+                            <?php
+                        }
                     }
                     ?>
                 </div>
@@ -276,18 +274,11 @@ else{
                 <div class="store-filter clearfix">
                     <span class="store-qty">Showing 20-100 products</span>
                     <ul class="store-pagination">
-                        <?php
-                            $all_product = $product->show_product_by_category($cateslug);
-                            $count = mysqli_num_rows($all_product);
-                            $page_btn = ceil($count/5);
-                            for ($i=1;$i<=$page_btn;$i++){
-                                 echo '<li class="active"><a href="?p='.$cateslug.'&page='.$i.'"> '.$i.'</a></li>';
-
-                            }
-                        ?>
-
-<!--                        <li><a href="#">2</a></li>-->
-                        <li><a href=""><i class="fa fa-angle-right"></i></a></li>
+                        <li class="active">1</li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
                     </ul>
                 </div>
                 <!-- /store bottom filter -->

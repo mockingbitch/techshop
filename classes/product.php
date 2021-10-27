@@ -44,21 +44,28 @@ class product
         
 
         if (empty($productName)||empty($cateid)||empty($brandid)||empty($des)||empty($price)||empty($content)||empty($quantity)) {
-            $alert = "Fields must be not empty";
+            $alert = "* Không được để trống thông tin!!!";
             return $alert;
         } else {
-            move_uploaded_file($file_temp,$uploaded_image);
-            $query = "INSERT INTO tbl_product(productName,cateid,brandid,productDescription,content,productQuantity,productPrice,img,productSlug) 
-            VALUES ('$productName','$cateid','$brandid','$des','$content','$quantity','$price','$unique_image','$productSlug')";
-            $result = $this->db->insert($query);
+            $queryCheck = "SELECT * FROM tbl_product WHERE productName = '$productName'";
+            $check = $this->db->select($queryCheck);
+                if ($check){
+                    $alert = "<span style='color: red;'>* Sản phẩm đã tồn tại</span>";
+                    return $alert;
+                }else{
+                    move_uploaded_file($file_temp,$uploaded_image);
+                    $query = "INSERT INTO tbl_product(productName,cateid,brandid,productDescription,content,productQuantity,productPrice,img,productSlug) 
+                              VALUES ('$productName','$cateid','$brandid','$des','$content','$quantity','$price','$unique_image','$productSlug')";
+                    $result = $this->db->insert($query);
 
-            if ($result) {
-                $alert = "<span class='success' style = 'color:green; font-weight:bold'>Thêm " . $productName . " thành công</span>";
-                return $alert;
-            } else {
-                $alert = "<span class='error' style = 'color:red; font-weight:bold'>Thất bại</span>";
-                return $alert;
-            }
+                    if ($result) {
+                        $alert = "<span class='success' style = 'color:green; font-weight:bold'>Thêm " . $productName . " thành công</span>";
+                        return $alert;
+                    } else {
+                        $alert = "<span class='error' style = 'color:red; font-weight:bold'>Thất bại</span>";
+                        return $alert;
+                    }
+                }
         }
     }
     public function show_product()
@@ -105,7 +112,7 @@ class product
         $uploaded_image = "../admin/uploads/products".$unique_image;
 
         if (empty($productName)||empty($cateid)||empty($brandid)||empty($des)||empty($price)||empty($content)||empty($quantity)) {
-            $alert = "Fields must be not empty";
+            $alert = "* Không được để trống thông tin!!!";
             return $alert;
         }
          else {
@@ -200,18 +207,31 @@ class product
         return $result;
     }
     public function show_product_by_category($cateslug){
+        $number = 6;
+
+        if (!isset($_GET['page'])){
+            $page = 1;
+        }else{
+            $page = $_GET['page'];
+        }
+        $per_page = ($page - 1 )*$number;
         $query1 = "SELECT * FROM tbl_category WHERE categorySlug = '$cateslug'";
         $result1 = $this->db->select($query1);
         if ($result1){
             $cateid = $result1->fetch_assoc();
             $a = $cateid['cateid'];
-            $query2 = "SELECT * FROM tbl_product WHERE cateid = '$a'";
+            $query2 = "SELECT * FROM tbl_product WHERE cateid = '$a' ORDER BY productid desc LIMIT $per_page,$number";
             $result2 = $this->db->select($query2);
             return $result2;
         }
     }
     public function show_single_product($productslug){
-        $query = "SELECT * FROM tbl_product WHERE productSlug = '$productslug'";
+        $query = "SELECT * FROM tbl_product WHERE productSlug = '$productslug' LIMIT 1";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    public function search_product($textsearch){
+        $query = "SELECT * FROM tbl_product WHERE productName LIKE '%$textsearch%'";
         $result = $this->db->select($query);
         return $result;
     }

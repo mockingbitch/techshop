@@ -27,16 +27,23 @@ class category
             $alert = "category name must be not empty";
             return $alert;
         } else {
-            $query = "INSERT INTO tbl_category(categoryName,categoryDescription,categorySlug,status) 
+            $queryCheck = "SELECT * FROM tbl_category WHERE categoryName = '$cateName'";
+            $check = $this->db->select($queryCheck);
+            if ($check){
+                $alert = "<span style='color: red'>* Danh mục đã tồn tại!!!</span>";
+                return $alert;
+            }else{
+                $query = "INSERT INTO tbl_category(categoryName,categoryDescription,categorySlug,status) 
             VALUES ('$cateName','$cateDes','$cateSlug','$status')";
-            $result = $this->db->insert($query);
+                $result = $this->db->insert($query);
 
-            if ($result) {
-                $alert = "<span class='success' style = 'color:green; font-weight:bold'>Thêm " . $cateName . " thành công</span>";
-                return $alert;
-            } else {
-                $alert = "<span class='error' style = 'color:red; font-weight:bold'>Thất bại</span>";
-                return $alert;
+                if ($result) {
+                    $alert = "<span class='success' style = 'color:green; font-weight:bold'>Thêm " . $cateName . " thành công</span>";
+                    return $alert;
+                } else {
+                    $alert = "<span class='error' style = 'color:red; font-weight:bold'>Thất bại</span>";
+                    return $alert;
+                }
             }
         }
     }

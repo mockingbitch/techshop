@@ -26,17 +26,24 @@ class brand
             $alert = "category name must be not empty";
             return $alert;
         } else {
-            $query = "INSERT INTO tbl_brand(brandName,brandDescription,brandSlug,status) 
+           $queryCheck = "SELECT * FROM tbl_brand WHERE brandName = '$brandName'";
+           $check = $this->db->select($queryCheck);
+           if ($check){
+               $alert = "<span style='color: red;'>* Tên thương hiệu đã tồn tại!!!</span>";
+               return $alert;
+           }else{
+               $query = "INSERT INTO tbl_brand(brandName,brandDescription,brandSlug,status) 
             VALUES ('$brandName','$brandDes','$brandSlug','$status')";
-            $result = $this->db->insert($query);
+               $result = $this->db->insert($query);
 
-            if ($result) {
-                $alert = "<span class='success' style = 'color:green; font-weight:bold'>Thêm " . $brandName . " thành công</span>";
-                return $alert;
-            } else {
-                $alert = "<span class='error' style = 'color:red; font-weight:bold'>Thất bại</span>";
-                return $alert;
-            }
+               if ($result) {
+                   $alert = "<span class='success' style = 'color:green; font-weight:bold'>Thêm " . $brandName . " thành công</span>";
+                   return $alert;
+               } else {
+                   $alert = "<span class='error' style = 'color:red; font-weight:bold'>Thất bại</span>";
+                   return $alert;
+               }
+           }
         }
     }
     public function show_brand()

@@ -39,7 +39,7 @@ class cartcheckout
             $sdt = mysqli_real_escape_string($this->db->link,$sdt);
             $note = mysqli_real_escape_string($this->db->link,$note);
             $addressdetail = mysqli_real_escape_string($this->db->link,$addressdetail);
-            $status = 1;
+            $status = 0;
 
             if (empty($username)||empty($email)||empty($city)||empty($sdt)||empty($addressdetail)){
                 $alert = 'Không được để trống thông tin';

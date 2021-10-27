@@ -10,7 +10,7 @@ if($_SERVER['REQUEST_METHOD']=='POST' && isset($_POST['register'])){
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Login Dashboard</title>
+    <title>Đăng nhập</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
