@@ -24,7 +24,7 @@ if(isset($_GET['deactivate'])){
     <!-- Content Header (Page header) -->
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <h3 align="center" style="text-shadow: 1px 1px 5px grey;">Danh sách danh mục</h3>
+            <h3 align="center" style="text-shadow: 1px 1px 5px grey;">Danh sách đơn hàng</h3>
             <?php
             if(isset($delorderid)){
                 echo $delorderid;
