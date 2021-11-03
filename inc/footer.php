@@ -101,7 +101,7 @@
             function addCart(productid){
                 $.post("shoppingcart.php",{'productid':productid},function (data,status){
                     alert('Đã thêm vào giỏ hàng');
-                    $("#listcart").load("http://techshop.test/ .cart");
+                    $("#listcart").load("http://techshop.test .cart");
                 });
             }
         </script>

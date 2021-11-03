@@ -267,6 +267,8 @@ else{
                     <!-- /product -->
                     <?php
                     }
+                    }else{
+                        echo "chưa có sản phẩm nào";
                     }
                     ?>
                 </div>

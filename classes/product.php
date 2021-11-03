@@ -109,7 +109,7 @@ class product
         $div = explode('.',$file_name);
         $file_ext = strtolower(end($div));
         $unique_image = substr(md5(time()),0,10).'.'.$file_ext;
-        $uploaded_image = "../admin/uploads/products".$unique_image;
+        $uploaded_image = "../admin/uploads/products/".$unique_image;
 
         if (empty($productName)||empty($cateid)||empty($brandid)||empty($des)||empty($price)||empty($content)||empty($quantity)) {
             $alert = "* Không được để trống thông tin!!!";
@@ -118,7 +118,7 @@ class product
          else {
             if(!empty($file_name)) {
                 if($file_size>20480000){
-                    $alert = "<span class='error'>Image size shoult be less than 2MB!</span>";
+                    $alert = "<span class='error'>Image size should be less than 2MB!</span>";
                     return $alert; 
                 }
                 elseif(in_array($file_ext,$permited)==false){

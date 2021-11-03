@@ -8,6 +8,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $adminPass = md5($_POST['pass']);
     $login_check = $class->login_admin($adminUser, $adminPass);
 }
+if (isset($_SESSION['login'])){
+    header('location:index.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
